@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/Documents/Projects/OpenGL/ecg_plot/main.c
+GLFW/glfw3.h
+-
+plotter.h
+/home/pi/Documents/Projects/OpenGL/ecg_plot/plotter.h
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+
+/home/pi/Documents/Projects/OpenGL/ecg_plot/plotter.h
+

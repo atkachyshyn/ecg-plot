@@ -1,0 +1,2 @@
+/usr/bin/ar qc libplotter.a  CMakeFiles/plotter.dir/plotter.c.o
+/usr/bin/ranlib libplotter.a
