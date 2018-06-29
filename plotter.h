@@ -32,29 +32,34 @@ struct buffer
 	struct point* data;
 };
 
+// Plotter
 struct plotter* get_plotter(void);
-void set_vertex_shader(struct plotter* plotter, const char* v_shader);
-void set_fragment_shader(struct plotter* plotter, const char* f_shader);
-void set_attributes(struct plotter* plotter, size_t num_attributes, char* attributes[]);
 void setup_plotter(struct plotter* plotter);
-static GLuint create_vertex_shader(struct plotter* plotter);
-GLuint create_fragment_shader(struct plotter* plotter);
-static GLuint create_shader(const char* shader_source, GLenum type);
+
+// GLFW
 static GLFWwindow* initalize_glfw_window(struct plotter* plotter);
-GLint get_attribute(GLuint program, const char *name);
-GLint get_uniform(GLuint program, const char *name);
-void initalize_buffer(void);
-void free_resources(struct plotter* plotter);
+static void handle_input(GLFWwindow* window, int key, int scancode, int action, int mods);
 void on_render(struct plotter* plotter);
+
+// OpenGL
+static GLuint create_program(GLuint vertex_shader, GLuint fragment_shader);
+static void set_vertex_shader(struct plotter* plotter, const char* v_shader);
+static void set_fragment_shader(struct plotter* plotter, const char* f_shader);
+static GLuint create_vertex_shader(struct plotter* plotter);
+static GLuint create_fragment_shader(struct plotter* plotter);
+static static GLuint create_shader(const char* shader_source, GLenum type);
+static void set_attributes(struct plotter* plotter, size_t num_attributes, char* attributes[]);
+static static GLuint create_shader(const char* shader_source, GLenum type);GLint get_attribute(GLuint program, const char *name);
+static static GLuint create_shader(const char* shader_source, GLenum type);GLint get_uniform(GLuint program, const char *name);
+static static GLuint create_shader(const char* shader_source, GLenum type);void initalize_buffer(void);
+void free_resources(struct plotter* plotter);
+static GLint create_attribute(GLuint program, char* attribute_name);
+static void create_buffers(struct plotter* plotter, size_t num_buffers, GLuint* buffers);
+
+// Render
+static void generate_time_scale(struct plotter* plotter);
+static void generate_millivolts_scale(struct plotter* plotter);
 static void render_func(struct plotter* plotter);
-GLuint create_program(GLuint vertex_shader, GLuint fragment_shader);
-GLint create_attribute(GLuint program, char* attribute_name);
-void create_buffers(struct plotter* plotter, size_t num_buffers, GLuint* buffers);
-void pass_data_buffer(GLuint buffer, GLvoid* data);
-void set_window_size(struct plotter* plotter, int width, int height);
-void pass_static_data_buffer(GLuint* buffer, size_t index, GLvoid* data);
-void pass_dynamic_data_buffer(GLuint* buffer, size_t index, size_t size, GLvoid* data);
+
+// Utility
 static int starts_with(const char *pre, const char *str);
-void handle_input(GLFWwindow* window, int key, int scancode, int action, int mods);
-void generate_time_scale(struct plotter* plotter);
-void generate_millivolts_scale(struct plotter* plotter);
