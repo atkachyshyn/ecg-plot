@@ -48,13 +48,12 @@ static void set_fragment_shader(struct plotter* plotter, const char* f_shader);
 static GLuint create_vertex_shader(struct plotter* plotter);
 static GLuint create_fragment_shader(struct plotter* plotter);
 static static GLuint create_shader(const char* shader_source, GLenum type);
-static void set_attributes(struct plotter* plotter, size_t num_attributes, char* attributes[]);
-static static GLuint create_shader(const char* shader_source, GLenum type);GLint get_attribute(GLuint program, const char *name);
-static static GLuint create_shader(const char* shader_source, GLenum type);GLint get_uniform(GLuint program, const char *name);
-static static GLuint create_shader(const char* shader_source, GLenum type);void initalize_buffer(void);
-void free_resources(struct plotter* plotter);
+static GLint get_attribute(GLuint program, const char *name);
+static GLint get_uniform(GLuint program, const char *name);
 static GLint create_attribute(GLuint program, char* attribute_name);
+static void set_attributes(struct plotter* plotter, size_t num_attributes, char* attributes[]);
 static void create_buffers(struct plotter* plotter, size_t num_buffers, GLuint* buffers);
+void free_resources(struct plotter* plotter);
 
 // Render
 static void generate_time_scale(struct plotter* plotter);
