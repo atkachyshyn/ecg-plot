@@ -43,8 +43,8 @@ void on_render(struct plotter* plotter);
 
 // OpenGL
 static GLuint create_program(GLuint vertex_shader, GLuint fragment_shader);
-static void set_vertex_shader(struct plotter* plotter, const char* v_shader);
-static void set_fragment_shader(struct plotter* plotter, const char* f_shader);
+void set_vertex_shader(struct plotter* plotter, const char* v_shader);
+void set_fragment_shader(struct plotter* plotter, const char* f_shader);
 static GLuint create_vertex_shader(struct plotter* plotter);
 static GLuint create_fragment_shader(struct plotter* plotter);
 static GLuint create_shader(const char* shader_source, GLenum type);
