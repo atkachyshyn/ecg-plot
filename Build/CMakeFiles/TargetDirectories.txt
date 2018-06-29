@@ -1,4 +1,0 @@
-/home/pi/Documents/Projects/OpenGL/ecg_plot/Build/CMakeFiles/rebuild_cache.dir
-/home/pi/Documents/Projects/OpenGL/ecg_plot/Build/CMakeFiles/edit_cache.dir
-/home/pi/Documents/Projects/OpenGL/ecg_plot/Build/CMakeFiles/ecg_plot.dir
-/home/pi/Documents/Projects/OpenGL/ecg_plot/Build/CMakeFiles/plotter.dir

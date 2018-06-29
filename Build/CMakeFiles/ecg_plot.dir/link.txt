@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/ecg_plot.dir/main.c.o  -o ecg_plot -rdynamic libplotter.a -lglfw -lGLU -lGL 

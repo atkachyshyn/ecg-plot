@@ -1,2 +1,0 @@
-/usr/bin/ar qc libadc.a  CMakeFiles/adc.dir/adc.c.o
-/usr/bin/ranlib libadc.a
