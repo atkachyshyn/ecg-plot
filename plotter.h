@@ -47,7 +47,7 @@ static void set_vertex_shader(struct plotter* plotter, const char* v_shader);
 static void set_fragment_shader(struct plotter* plotter, const char* f_shader);
 static GLuint create_vertex_shader(struct plotter* plotter);
 static GLuint create_fragment_shader(struct plotter* plotter);
-static static GLuint create_shader(const char* shader_source, GLenum type);
+static GLuint create_shader(const char* shader_source, GLenum type);
 static GLint get_attribute(GLuint program, const char *name);
 static GLint get_uniform(GLuint program, const char *name);
 static GLint create_attribute(GLuint program, char* attribute_name);
