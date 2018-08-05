@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 // Defines for scales
 #define TIME_SCALE_MAX_VISIBLE_RANGE_SECONDS 6
@@ -73,13 +74,14 @@ void read_ecg_simulation()
     size_t len = 0;
     ssize_t read;
 
-    fp = fopen("ecgsyn.dat", "r");
+    fp = fopen("../ecgsyn.dat", "r");
     if (fp == NULL)
         exit(EXIT_FAILURE);
 
     while ((read = getline(&line, &len, fp)) != -1) {
-        printf("Retrieved line of length %zu :\n", read);
-        printf("%s", line);
+        char[] x = strtok(line,' ');
+        char[] y = strtok (NULL, ' ');
+        printf("x: %s, y: %s", x, y);
     }
 
     fclose(fp);
