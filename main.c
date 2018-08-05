@@ -13,6 +13,11 @@
 #define TIME_SCALE_TICK_VALUE_SECONDS 0.04
 #define VOLTAGE_SCALE_TICK_VALUE_MILLIVOLTS 0.1
 
+#define ECG_SAMPLE = [123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,
+3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,
+9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,
+123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545]
+
 int main(void)
 {
 	// Create new plotter
@@ -49,6 +54,8 @@ int main(void)
 	
 	// Setup plotter (Create window, compile shaders, generate VBOs)
     setup_plotter(new_plotter);
+
+    set_data(new_plotter, ECG_SAMPLE);
 
 	// Call render function
     on_render(new_plotter);

@@ -297,6 +297,22 @@ static void generate_millivolts_scale(struct plotter* plotter)
 	}
 }
 
+void set_data(struct plotter* plotter, float* data)
+{
+	size_t num_elements = sizeof(data)/sizeof(data[0])/2;
+	plotter->buffers[1].num_elements = num_elements;
+    plotter->buffers[1].size_bytes = num_elements * sizeof(struct point);
+    plotter->buffers[1].data = (struct point*)calloc(num_elements,sizeof(struct point));
+
+	for(int i = 0; i++; i < num_elements)
+	{
+		plotter->buffers[2].data[i].vertex2d[0] = data[i * 2];
+		plotter->buffers[2].data[i].vertex2d[1] = data[i * 2 + 1];
+		plotter->buffers[2].data[i].color[0] = 0.0;
+		plotter->buffers[2].data[i].color[1] = 0.0;
+		plotter->buffers[2].data[i].color[2] = 0.0;
+	}
+}
 
 static void render_func(struct plotter* plotter)
 {
@@ -358,6 +374,28 @@ static void render_func(struct plotter* plotter)
 	);
 
     glDrawArrays(GL_LINES, 0, plotter->buffers[1].num_elements);
+
+	glBindBuffer(GL_ARRAY_BUFFER, plotter->buffers[2].address);
+    glBufferData(GL_ARRAY_BUFFER, plotter->buffers[2].size_bytes, plotter->buffers[2].data, GL_DYNAMIC_DRAW);
+
+	glVertexAttribPointer(
+		plotter->attributes[0],   // attribute
+		2,                   // number of elements per vertex, here (x,y)
+		GL_FLOAT,            // the type of each element
+		GL_FALSE,            // take our values as-is
+		sizeof(struct point),  // next coord2d appears every 5 floats
+		0                    // offset of first element
+	);
+	glVertexAttribPointer(
+		plotter->attributes[1],      // attribute
+		3,                      // number of elements per vertex, here (r,g,b)
+		GL_FLOAT,               // the type of each element
+		GL_FALSE,               // take our values as-is
+		sizeof(struct point),  // stride
+		(GLvoid*) offsetof(struct point, color)  // offset
+	);
+
+    glDrawArrays(GL_LINES, 0, plotter->buffers[2].num_elements);
 }
 
 // Utility functions //////////////////////////////////////////////////////////////////////////////
