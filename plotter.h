@@ -60,7 +60,7 @@ void free_resources(struct plotter* plotter);
 static void generate_time_scale(struct plotter* plotter);
 static void generate_millivolts_scale(struct plotter* plotter);
 static void render_func(struct plotter* plotter);
-void set_data(float* data);
+void set_data(struct plotter* plotter, float* data);
 
 // Utility
 static int starts_with(const char *pre, const char *str);
