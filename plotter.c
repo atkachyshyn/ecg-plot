@@ -303,7 +303,7 @@ void set_data(struct plotter* plotter, float* data)
 	plotter->buffers[2].num_elements = num_elements;
     plotter->buffers[2].size_bytes = num_elements * sizeof(struct point);
     plotter->buffers[2].data = (struct point*)calloc(num_elements,sizeof(struct point));
-	printf("Buffer[2]: num_elements: %d, size_bytes: %p address: %p\n",plotter->buffers[2].num_elements, plotter->buffers[2].size_bytes,plotter->buffers[2]);
+	printf("Buffer[2]: num_elements: %d, size_bytes: %p address: %p\n",plotter->buffers[2].num_elements, plotter->buffers[2].size_bytes,data);
 	for(int i = 0; i++; i < num_elements)
 	{
 		plotter->buffers[2].data[i].vertex2d[0] = data[i * 2];
