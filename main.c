@@ -79,8 +79,8 @@ void read_ecg_simulation()
         exit(EXIT_FAILURE);
 
     while ((read = getline(&line, &len, fp)) != -1) {
-        char[] x = strtok(line,' ');
-        char[] y = strtok (NULL, ' ');
+        char* x = strtok(line,' ');
+        char* y = strtok (NULL, ' ');
         printf("x: %s, y: %s", x, y);
     }
 
