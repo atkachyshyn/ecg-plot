@@ -311,6 +311,7 @@ void set_data(struct plotter* plotter, float* data)
 		plotter->buffers[2].data[i].color[0] = 0.0;
 		plotter->buffers[2].data[i].color[1] = 0.0;
 		plotter->buffers[2].data[i].color[2] = 0.0;
+		printf("data[%d].x = %f data[%d].y = %f\n", i, plotter->buffers[2].data[i].vertex2d[0], i, plotter->buffers[2].data[i].vertex2d[1]);
 	}
 }
 
