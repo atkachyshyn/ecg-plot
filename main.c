@@ -13,7 +13,9 @@
 #define TIME_SCALE_TICK_VALUE_SECONDS 0.04
 #define VOLTAGE_SCALE_TICK_VALUE_MILLIVOLTS 0.1
 
-float ECG_SAMPLE[] = {123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545,123,3445,656,23,4565,111,87,9873,456,44,7943,666,14,654,7124,545};
+void read_ecg_simulation(void);
+
+float ECG_SAMPLE[] = {0.123,0.3445,0.656,0.23,0.4565,0.111,0.87,0.9873,0.456,0.44,0.7943,0.666,0.14,0.654,0.7124,0.545,0.123,0.3445,0.656,0.23,0.4565,0.111,0.87,0.9873,0.456,0.44,0.7943,0.666,0.14,0.654,0.7124,0.545,0.123,0.3445,0.656,0.23,0.4565,0.111,0.87,0.9873,0.456,0.44,0.7943,0.666,0.14,0.654,0.7124,0.545,0.123,0.3445,0.656,0.23,0.4565,0.111,0.87,0.9873,0.456,0.44,0.7943,0.666,0.14,0.654,0.7124,0.545,0.123,0.3445,0.656,0.23,0.4565,0.111,0.87,0.9873,0.456,0.44,0.7943,0.666,0.14,0.654,0.7124,0.545};
 
 int main(void)
 {
@@ -52,6 +54,7 @@ int main(void)
 	// Setup plotter (Create window, compile shaders, generate VBOs)
     setup_plotter(new_plotter);
 
+    read_ecg_simulation();
     set_data(new_plotter, ECG_SAMPLE);
 
 	// Call render function
@@ -63,5 +66,23 @@ int main(void)
     return 0;
 }
 
+void read_ecg_simulation()
+{
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
+    fp = fopen("ecgsyn.dat", "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
 
+    while ((read = getline(&line, &len, fp)) != -1) {
+        printf("Retrieved line of length %zu :\n", read);
+        printf("%s", line);
+    }
+
+    fclose(fp);
+    if (line)
+        free(line);
+}
