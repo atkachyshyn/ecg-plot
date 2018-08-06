@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.0)
 # Name of our Project
 project(opengl_test)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 
@@ -20,4 +22,4 @@ add_library(plotter STATIC plotter.c)
 add_executable(ecg_plot main.c)
 
 # target_link_libraries(ecg_plot plotter adc ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES})
-target_link_libraries(ecg_plot plotter ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES})
+target_link_libraries(ecg_plot plotter ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} Threads::Threads)
