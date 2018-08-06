@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
 
 // Defines for scales
 #define TIME_SCALE_MAX_VISIBLE_RANGE_SECONDS 6
@@ -13,6 +14,11 @@
 #define TICK_SPACE_PIXELS 10;
 #define TIME_SCALE_TICK_VALUE_SECONDS 0.04
 #define VOLTAGE_SCALE_TICK_VALUE_MILLIVOLTS 0.1
+#define DELAY 3906250L
+
+static float* time; 
+static float* voltage;
+static FILE* fp;
 
 void read_ecg_simulation(void);
 
@@ -55,8 +61,14 @@ int main(void)
 	// Setup plotter (Create window, compile shaders, generate VBOs)
     setup_plotter(new_plotter);
 
-    read_ecg_simulation();
-    set_data(new_plotter, ECG_SAMPLE);
+    struct timespec ts = {0, DELAY };
+    fp = open_file("../ecgsyn.dat");
+    while (read_next(time, voltage, fp)) 
+    {
+        nanosleep (&ts, NULL);
+    }
+    close_file(fp);
+    //set_data(new_plotter, ECG_SAMPLE);
 
 	// Call render function
     on_render(new_plotter);
@@ -67,35 +79,84 @@ int main(void)
     return 0;
 }
 
-void read_ecg_simulation()
+FILE* open_file(char* path)
 {
-    FILE * fp;
+    fp = fopen(path, "r");
+    if (fp == NULL)
+        fprintf( stderr, "Can't open given file", 30);
+    return fp;
+}
+
+void close_file(FILE* fp)
+{
+    fclose(fp);
+}
+
+int read_next(float* time, float* voltage, FILE* fp)
+{
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
 
-    fp = fopen("../ecgsyn.dat", "r");
-    if (fp == NULL)
-        exit(EXIT_FAILURE);
+    read = getline(&line, &len, fp))
 
-    int count = 0;
-    int seconds = 1;
-    while ((read = getline(&line, &len, fp)) != -1) {
-        float x = atof(strtok(line, ""));
-        float y = atof(strtok (NULL, " "));
-        if (x < seconds)
-        { 
-            printf("index: %d x: %s, y: %s", count++, x, y);
-            // count++;
-        }
-        else
-        {
-            printf("samples per second: %d, frequency: %f", count, 1/count);
-            count = 0;
-        }
+    if (read == -1)
+    {
+        &time = NULL;
+        &voltage = NULL;
+        return 0;
     }
 
-    fclose(fp);
-    if (line)
-        free(line);
+    const char* x = strtok(line, " ");
+    const char* y = strtok (NULL, " ");
+
+    if (x != NULL && y != NULL)
+    {
+        &time = atof(x);
+        &voltage = atof(y);
+    }
+
+    printf("x: %f y: %f\n", &time, &voltage);
+
+    return 1;
 }
+
+// void read_ecg_simulation()
+// {
+//     FILE * fp;
+//     char * line = NULL;
+//     size_t len = 0;
+//     ssize_t read;
+
+//     fp = fopen("../ecgsyn.dat", "r");
+//     if (fp == NULL)
+//         exit(EXIT_FAILURE);
+
+//     int count = 1;
+//     int seconds = 1;
+//     while ((read = getline(&line, &len, fp)) != -1) {
+// 		float time, voltage;
+//         const char* x = strtok(line, " ");
+//         const char* y = strtok (NULL, " ");
+//         if (x != NULL && y != NULL)
+//         {
+// 			time = atof(x);
+// 			voltage = atof(y);
+// 		}
+// 		if (time < seconds)
+//         { 
+//             count++;
+//         }
+//         else
+//         {
+//             printf("samples per second: %d, frequency: %f\n", count, count/1.0);
+//             count = 1;
+//             seconds++;
+//         }
+//         printf("index: %d x: %f, y: %f\n", count, time, voltage);
+//     }
+
+//     fclose(fp);
+//     if (line)
+//         free(line);
+// }
