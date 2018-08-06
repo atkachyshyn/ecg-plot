@@ -78,10 +78,21 @@ void read_ecg_simulation()
     if (fp == NULL)
         exit(EXIT_FAILURE);
 
+    int count = 0;
+    int seconds = 1;
     while ((read = getline(&line, &len, fp)) != -1) {
-        char* x = strtok(line,' ');
-        char* y = strtok (NULL, ' ');
-        printf("x: %s, y: %s", x, y);
+        float x = atof(strtok(line, ""));
+        float y = atof(strtok (NULL, " "));
+        if (x < seconds)
+        { 
+            printf("index: %d x: %s, y: %s", count++, x, y);
+            // count++;
+        }
+        else
+        {
+            printf("samples per second: %d, frequency: %f", count, 1/count);
+            count = 0;
+        }
     }
 
     fclose(fp);
