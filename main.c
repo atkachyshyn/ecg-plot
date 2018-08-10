@@ -27,7 +27,7 @@ typedef enum {
     DATA_RATE_475 = 475,  // 475 samples per second
     DATA_RATE_860 = 860  // 860 samples per second
     // ... add new
-} adc_datarate
+} adc_datarate;
 
 struct context
 {
