@@ -162,5 +162,5 @@ void *threadFunc(void *arg)
 
 static void set_data_rate(struct context* config, enum adc_datarate)
 {
-    config.adc_datarate = adc_datarate;
+    config->adc_datarate = adc_datarate;
 }
