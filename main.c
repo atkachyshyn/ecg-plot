@@ -17,6 +17,23 @@
 #define VOLTAGE_SCALE_TICK_VALUE_MILLIVOLTS 0.1
 #define DELAY 3906250L
 
+typedef enum {
+    DATA_RATE_8 = 8,  // 8 samples per second
+    DATA_RATE_16 = 16,  // 16 samples per second
+    DATA_RATE_32 = 32,  // 32 samples per second
+    DATA_RATE_64 = 64,  // 64 samples per second
+    DATA_RATE_128 = 128,  // 128 samples per second (default)
+    DATA_RATE_250 = 250,  // 250 samples per second
+    DATA_RATE_475 = 475,  // 475 samples per second
+    DATA_RATE_860 = 860  // 860 samples per second
+    // ... add new
+} adc_datarate
+
+struct context
+{
+    adc_datarate
+};
+
 static float time_val = 0; 
 static float voltage_val = 0;
 
@@ -28,6 +45,10 @@ void *threadFunc(void *arg);
 
 int main(void)
 {
+    // Create context
+    struct context config;
+    set_data_rate(&config, adc_datarate.DATA_RATE_250);
+
 	// Create new plotter
     struct plotter* new_plotter = get_plotter();
 
@@ -62,6 +83,11 @@ int main(void)
 	
 	// Setup plotter (Create window, compile shaders, generate VBOs)
     setup_plotter(new_plotter);
+
+    int width_pixel, height_pixel;
+    get_window_size_pixel(new_plotter, width_pixel, height_pixel);
+    size_t size = ((TIME_SCALE_TICK_VALUE_SECONDS\TICK_SPACE_PIXELS) * width_pixel * 1000 * config.adc_datarate);
+    printf("buffer size: %d", size);
     
     // read file with frequency 256HZ in another thread
     pthread_t pth;
@@ -123,7 +149,7 @@ static int read_next(float* time, float* voltage, FILE* fp)
 void *threadFunc(void *arg)
 {
 	
-	struct timespec ts = {0, 3906250L };
+	struct timespec ts = {0, DELAY };
     FILE* fp = open_file("../ecgsyn.dat");
     while (read_next(&time_val, &voltage_val, fp)) 
     {
@@ -132,4 +158,9 @@ void *threadFunc(void *arg)
     close_file(fp);
     
     return NULL;
+}
+
+static void set_data_rate(struct context* config, enum adc_datarate)
+{
+    config.adc_datarate = adc_datarate;
 }
