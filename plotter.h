@@ -41,7 +41,7 @@ void setup_plotter(struct plotter* plotter);
 static GLFWwindow* initalize_glfw_window(struct plotter* plotter);
 static void handle_input(GLFWwindow* window, int key, int scancode, int action, int mods);
 void on_render(struct plotter* plotter);
-void get_window_size_pixel(struct plotter* plotter, int* width, int* height)
+void get_window_size_pixel(struct plotter* plotter, int* width, int* height);
 
 // OpenGL
 static GLuint create_program(GLuint vertex_shader, GLuint fragment_shader);
